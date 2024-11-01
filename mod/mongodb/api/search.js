@@ -1,4 +1,4 @@
-import dbCollection from "../instance.js";
+import coursesCollection from "../instance.js";
 import { handleSearchResponse } from "./helpers.js";
 
 const PER_PAGE_LIMIT = 10;
@@ -43,8 +43,12 @@ const searchCourses = async (req, res) => {
       },
     });
 
-    const coursesResult = await dbCollection.aggregate(pipeline).toArray();
-    const data = handleSearchResponse({ response: coursesResult, page, perPage: PER_PAGE_LIMIT });
+    const coursesResult = await coursesCollection.aggregate(pipeline).toArray();
+    const data = handleSearchResponse({
+      response: coursesResult,
+      page,
+      perPage: PER_PAGE_LIMIT,
+    });
     return res.status(200).send(data);
   } catch (error) {
     console.error("search-courses-failed:", error);

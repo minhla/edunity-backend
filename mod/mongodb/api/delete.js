@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 
-import dbCollection from "../instance.js";
+import coursesCollection from "../instance.js";
 
 const deleteCourse = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ const deleteCourse = async (req, res) => {
       res.status(400).send({ message: "ID is required" });
     }
 
-    await dbCollection.deleteOne({ _id: new ObjectId(id) });
+    await coursesCollection.deleteOne({ _id: new ObjectId(id) });
 
     res.status(200).send({ message: "Success" });
   } catch (error) {

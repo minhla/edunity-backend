@@ -1,4 +1,4 @@
-import dbCollection from "../instance.js";
+import coursesCollection from "../instance.js";
 
 const createCourse = async (req, res) => {
   try {
@@ -12,12 +12,13 @@ const createCourse = async (req, res) => {
       return res.status(400).send({ message: "Missing required fields" });
     }
 
-    const insertResponse = await dbCollection.insertOne({
+    const insertResponse = await coursesCollection.insertOne({
       title,
       categories,
       price: parseInt(price),
       rating: parseFloat(rating),
       coverImage,
+      createdAt: new Date(),
     });
 
     const { insertedId } = insertResponse;
