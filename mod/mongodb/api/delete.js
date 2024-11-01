@@ -6,7 +6,7 @@ const deleteCourse = async (req, res) => {
   try {
     const id = req.params.id;
     if (!id) {
-      res.status(400).send("ID is required");
+      res.status(400).send({ message: "ID is required" });
     }
 
     await dbCollection.deleteOne({ _id: new ObjectId(id) });
