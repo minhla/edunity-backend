@@ -6,7 +6,7 @@ import { fetchCoursesAndInsertIntoDb } from "../mongodb/api/add.js";
 const EVERY_10_MINUTES = "*/10 * * * *";
 
 cron.schedule(EVERY_10_MINUTES, async () => {
-  console.info("Running cron job");
+  console.info("== Cron job started ==");
 
   await coursesCollection.deleteMany({});
   console.info("Deleted all courses");
@@ -14,5 +14,5 @@ cron.schedule(EVERY_10_MINUTES, async () => {
   await fetchCoursesAndInsertIntoDb();
   console.info("Inserted new courses");
 
-  console.info("Cron job completed");
+  console.info("== Cron job ended ==");
 });
