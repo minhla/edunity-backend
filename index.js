@@ -1,9 +1,15 @@
-import db from "./mod/mongodb/instance.js";
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
+
+import coursesRouter from "./mod/mongodb/api/index.js";
+
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.use("/api/courses", coursesRouter);
+
+app.get("*", (req, res) => {
+  res.status(404).send({ message: "Not Found" });
 });
 
 const PORT = process.env.PORT || 3000;
