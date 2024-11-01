@@ -10,8 +10,8 @@ coursesRouter.use(express.json());
 
 coursesRouter.get("/search", searchCourses);
 
-coursesRouter.delete("/:id", deleteCourse);
-
 coursesRouter.post("/create", createCourse);
+
+coursesRouter.delete("/delete/:id", deleteCourse);
 
 export default coursesRouter;
