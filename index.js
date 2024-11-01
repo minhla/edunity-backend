@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 
 import coursesRouter from "./mod/mongodb/api/index.js";
+import "./mod/cron/index.js";
 
 const app = express();
 
