@@ -1,0 +1,21 @@
+import { ObjectId } from "mongodb";
+
+import dbCollection from "../instance.js";
+
+const deleteCourse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      res.status(400).send("ID is required");
+    }
+
+    await dbCollection.deleteOne({ _id: new ObjectId(id) });
+
+    res.status(200).send({ message: "Success" });
+  } catch (error) {
+    console.error("delete-course-failed:", error);
+    res.status(500).send({ message: "Unexpected error" });
+  }
+};
+
+export default deleteCourse;
