@@ -3,6 +3,7 @@ import csvParser from "csv-parser";
 import { Readable } from "stream";
 
 import coursesCollection from "../instance.js";
+import { formatCsvRowData } from "./helpers.js";
 
 const { MOCKAROO_RESOURCE_NAME, MOCKAROO_API_KEY } = process.env;
 
@@ -18,7 +19,10 @@ const parseCsvData = (csvDataBuffer, createdAt) => {
 
     stream
       .pipe(csvParser())
-      .on("data", (data) => results.push({ ...data, createdAt }))
+      .on("data", (data) => {
+        const formattedData = formatCsvRowData(data);
+        results.push({ ...formattedData });
+      })
       .on("end", () => resolve(results))
       .on("error", (error) => reject(error));
   });
@@ -48,4 +52,3 @@ export const addCourses = async (req, res) => {
     return res.status(500).send({ message: "Unexpected error" });
   }
 };
-

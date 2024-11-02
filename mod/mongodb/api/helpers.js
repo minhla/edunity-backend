@@ -12,27 +12,28 @@
  */
 export const handleSearchResponse = ({ response, page, perPage }) => {
   const { data, meta } = response[0];
-  const dataFormatted = data.map((item) => {
-    const { _id, title, categories, price, rating, cover_image } = item;
-    const formattedCategories = categories.split(";");
-    return {
-      id: _id.toString(),
-      title,
-      categories: formattedCategories,
-      price,
-      rating,
-      coverImage: cover_image,
-    };
-  });
-
-  const { totalItems } = meta[0];
+  const { totalItems = 0 } = meta[0] ?? {};
 
   return {
-    data: dataFormatted,
+    data,
     meta: {
-      page,
+      page: parseInt(page),
       perPage,
       totalItems,
     },
+  };
+};
+
+export const formatCsvRowData = (data) => {
+  const { categories, price, rating, ...rest } = data;
+  const formattedCategories = categories.split(";");
+  const formattedPrice = parseInt(price);
+  const formattedRating = parseFloat(rating);
+
+  return {
+    ...rest,
+    categories: formattedCategories,
+    price: formattedPrice,
+    rating: formattedRating,
   };
 };
