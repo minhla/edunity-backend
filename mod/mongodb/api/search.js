@@ -6,7 +6,7 @@ const PER_PAGE_LIMIT = 10;
 const searchCourses = async (req, res) => {
   try {
     const query = req.query;
-    const { keywords, page = 1 } = query;
+    const { keywords, category, page = 1 } = query;
     const normalizedPageValue = parseInt(page) || 1;
     const skipValue = (normalizedPageValue - 1) * PER_PAGE_LIMIT;
     const pipeline = [];
@@ -16,11 +16,21 @@ const searchCourses = async (req, res) => {
         $search: {
           index: "default",
           text: {
-            query: query.keywords,
+            query: keywords,
             path: {
               wildcard: "*",
             },
           },
+        },
+      });
+    }
+
+    if (category) {
+      const decodedCategory = decodeURIComponent(category);
+      const categoryRegexMatch = new RegExp(`^${decodedCategory}$`, "i");
+      pipeline.push({
+        $match: {
+          categories: { $regex: categoryRegexMatch },
         },
       });
     }
