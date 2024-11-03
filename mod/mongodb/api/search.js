@@ -1,7 +1,7 @@
 import coursesCollection from "../instance.js";
 import { handleSearchResponse } from "./helpers.js";
 
-const PER_PAGE_LIMIT = 10;
+const PER_PAGE_LIMIT = 12;
 
 const searchCourses = async (req, res) => {
   try {
