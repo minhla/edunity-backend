@@ -12,9 +12,11 @@ const createCourse = async (req, res) => {
       return res.status(400).send({ message: "Missing required fields" });
     }
 
+    const formattedCategories = categories.split(",").map((category) => category.trim());
+
     const insertResponse = await coursesCollection.insertOne({
       title,
-      categories,
+      categories: formattedCategories,
       price: parseInt(price),
       rating: parseFloat(rating),
       coverImage,
